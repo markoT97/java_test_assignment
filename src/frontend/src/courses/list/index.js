@@ -39,7 +39,7 @@ export default function CourseList({ epoch }) {
         Accept: 'application/json',
       },
     })
-      .then((result) => console.log('RESULTS', result))
+      .then((result) => result.json())
       .then((result) => {
         setCourses(result);
         setFetching(false);

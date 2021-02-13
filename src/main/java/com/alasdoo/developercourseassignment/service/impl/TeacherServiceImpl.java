@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +23,12 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherMapper teacherMapper;
 
     public TeacherDTO findOne(Integer id) {
-        return null;
+        Optional<Teacher> teacher = teacherRepository.findById(id);
+        if (!teacher.isPresent()) {
+            throw new IllegalArgumentException
+                ("Teacher with the following id = " + id + " is not found.");
+        }
+        return teacherMapper.transformToDTO(teacher.get());
     }
 
     public List<TeacherDTO> findAll() {
@@ -42,10 +48,18 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     public TeacherDTO findByTeacherNameAndTeacherSurname(String name, String surname) {
-        return null;
+        Optional<Teacher> teacher = teacherRepository.findByTeacherNameAndTeacherSurname(name, surname);
+        if (!teacher.isPresent()) {
+            throw new IllegalArgumentException( ("Teacher with the following name = " + name + " and" + " surname " + surname + " is not found."));
+        }
+        return teacherMapper.transformToDTO(teacher.get());
     }
 
     public TeacherDTO findByTeacherEmail(String email) {
-        return null;
+        Optional<Teacher> teacher = teacherRepository.findByTeacherEmail(email);
+        if (!teacher.isPresent()) {
+            throw new IllegalArgumentException( ("Teacher with the following email = " + email + " is not found."));
+        }
+        return teacherMapper.transformToDTO(teacher.get());
     }
 }

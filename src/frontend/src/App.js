@@ -1,3 +1,4 @@
+import React from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import MainLayout from './layout';
 import {

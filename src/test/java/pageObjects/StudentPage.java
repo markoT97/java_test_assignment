@@ -12,11 +12,8 @@ public class StudentPage extends PageObject {
 	@FindBy(className = "MuiTypography-h6")
 	private WebElement header;
 
-	@FindBy(className = "rendering-zone")
-	private WebElement tableRenderingZone;
-
-	@FindBy(css = "div[aria-label='grid'")
-	private WebElement table;
+	@FindBy(css = "div[data-rowindex='0']")
+	private WebElement tableItem;
 
 	@FindBy(className = "MuiTablePagination-caption")
 	private WebElement tablePagination;
@@ -24,37 +21,30 @@ public class StudentPage extends PageObject {
 	@FindBy(css = "button[aria-label='add']")
 	private WebElement formInsertOpenButton;
 
-	// FORM Insert
-	@FindBy(id = "formik-text-field-2")
-	private WebElement nameInsert;
+	@FindBy(css = "form")
+	private WebElement form;
 
-	@FindBy(id = "formik-text-field-4")
-	private WebElement surnameInsert;
+	// FORM (Insert, Update)
+	@FindBy(name = "name")
+	private WebElement name;
 
-	@FindBy(id = "formik-text-field-6")
-	private WebElement accountNameInsert;
+	@FindBy(name = "surname")
+	private WebElement surname;
 
-	@FindBy(id = "formik-text-field-8")
-	private WebElement emailInsert;
+	@FindBy(name = "accountName")
+	private WebElement accountName;
 
-	@FindBy(id = "formik-text-field-10")
-	private WebElement bankCardNumberInsert;
+	@FindBy(name = "email")
+	private WebElement email;
 
-	// FORM Update
-	@FindBy(id = "formik-text-field-22")
-	private WebElement nameUpdate;
-
-	@FindBy(id = "formik-text-field-24")
-	private WebElement surnameUpdate;
-
-	@FindBy(id = "formik-text-field-28")
-	private WebElement emailUpdate;
-
-	@FindBy(css = "button[data-test-id='save']")
-	private WebElement formUpdateSubmitButton;
+	@FindBy(name = "bankCardNumber")
+	private WebElement bankCardNumber;
 
 	@FindBy(css = "button[data-test-id='courses']")
 	private WebElement toggleCoursesButton;
+
+	@FindBy(css = "button[data-test-id='delete']")
+	private WebElement removeStudentButton;
 
 	// FORM Submit button
 	@FindBy(css = "button[data-test-id='save']")
@@ -66,34 +56,34 @@ public class StudentPage extends PageObject {
 	}
 
 	public void addStudent() {
-		 // Open a form for adding a new student
+		 // Open a form for inserting a student
 		this.formInsertOpenButton.click();
 
 		// Populate insert form fields
-		this.nameInsert.sendKeys("TEST_QA_Name");
+		this.name.sendKeys("TEST_QA_Name");
 
-		this.surnameInsert.sendKeys("TEST_QA_Surname");
+		this.surname.sendKeys("TEST_QA_Surname");
 
-		this.accountNameInsert.sendKeys("TEST_QA_AccountName");
+		this.accountName.sendKeys("TEST_QA_AccountName");
 
-		this.emailInsert.sendKeys("TEST_QA@mail.com");
+		this.email.sendKeys("TEST_QA@mail.com");
 
-		this.bankCardNumberInsert.sendKeys("0000");
+		this.bankCardNumber.sendKeys("0000");
 
 		// Submit form
 		this.formSubmitButton.click();
 	}
 
 	public void updateStudent() {
-		// Open a form for adding a new student
-	   this.formInsertOpenButton.click();
+		// Open a form for updating a student
+	   this.tableItem.click();
 
-	   // Populate insert form fields
-	   this.nameInsert.sendKeys("TEST_QA_Name_UPDATE");
+	   // Populate update form fields
+	   this.name.sendKeys("TEST_QA_Name_UPDATE");
 
-	   this.surnameInsert.sendKeys("TEST_QA_Surname_UPDATE");
+	   this.surname.sendKeys("TEST_QA_Surname_UPDATE");
 
-	   this.emailInsert.sendKeys("TEST_QA_UPDATE@mail.com");
+	   this.email.sendKeys("TEST_QA_UPDATE@mail.com");
 
 	   // Submit form
 	   this.formSubmitButton.click();
@@ -107,12 +97,20 @@ public class StudentPage extends PageObject {
 		return Integer.parseInt(tablePagination.getAttribute("innerText").split(" ")[2]);
 	}
 
-	public boolean isTableEmpty() {
-		return this.tableRenderingZone.getText().equals("");
+	public WebElement getTableItem() {
+		return this.tableItem;
 	}
 
-	public WebElement getTable() {
-		return this.table;
+	public WebElement getForm() {
+		return this.form;
+	}
+
+	public WebElement getRemoveStudentButton() {
+		return this.removeStudentButton;
+	}
+
+	public String getFormNameFieldValue() {
+		return this.name.getAttribute("innerText");
 	}
 	
 	public boolean isInitialized() {

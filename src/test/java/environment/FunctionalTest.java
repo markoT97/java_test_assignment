@@ -32,9 +32,7 @@ public class FunctionalTest {
 	}
 
 	@BeforeAll
-	public static void setUp() {
-		
-		
+	public static void setUp() {		
 		try {
 			String browser = System.getProperty("browser");	
 			
@@ -63,11 +61,6 @@ public class FunctionalTest {
 		
 		driver.manage().window().setSize(new Dimension(1280, 768));
 		wait = new WebDriverWait(driver, 10);
-	}
-
-	@AfterAll
-	public static void cleanUp() {
-		driver.manage().deleteAllCookies();
 	}
 
 	@AfterAll

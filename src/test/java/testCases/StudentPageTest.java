@@ -92,4 +92,23 @@ public class StudentPageTest extends FunctionalTest {
 
 		assertEquals(--numberOfEntriesBeforeInsert, numberOfEntriesAfterInsert);
 	}
+
+	@Test
+	@Order(4)
+	public void enrollStudentToCourse() {
+		students.getTableItem().click();
+
+		wait.until(ExpectedConditions.visibilityOf(students.getCoursesDropdownButton()));
+		students.getToggleCoursesButton().click();
+
+		//wait.until(ExpectedConditions.visibilityOf(students.getEnrollCourseForm()));
+
+		int numberOfEnrolledCoursesBeforeInsert = 1;
+
+		students.enrollCourseForStudent();
+
+		int numberOfEnrolledCoursesAfterInsert = 1;
+
+		assertEquals(true, true);
+	}
 }

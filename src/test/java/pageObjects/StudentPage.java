@@ -50,6 +50,21 @@ public class StudentPage extends PageObject {
 	@FindBy(css = "button[data-test-id='save']")
 	private WebElement formSubmitButton;
 
+	// FORM for course enrollment
+	@FindBy(className = "MuiDataGrid-root MuiDataGrid-root")
+	private WebElement enrollCourseForm;
+
+	@FindBy(css = "button[data-test-id='add-courses'")
+	private WebElement addCourseButton;
+
+	@FindBy(css = "label[for='formik-select-field-3042']")
+	private WebElement courseDropdown;
+
+	@FindBy(css = "li[tabindex='0']")
+	private WebElement coursesDropdownItem;
+
+	@FindBy(name = "classesBought")
+	private WebElement classes;
 	
 	public StudentPage(WebDriver driver) {
 		super(driver);
@@ -90,8 +105,14 @@ public class StudentPage extends PageObject {
 	   this.formSubmitButton.click();
    }
 
-   public void openCoursesForStudent() {
-	   this.toggleCoursesButton.click();
+   public void enrollCourseForStudent() {
+	   this.addCourseButton.click();
+
+	   this.courseDropdown.click();
+
+	   this.coursesDropdownItem.click();
+
+	   this.classes.sendKeys("1");
    }
 
 	public int getNumberOfEntries() {
@@ -106,8 +127,20 @@ public class StudentPage extends PageObject {
 		return this.form;
 	}
 
+	public WebElement getEnrollCourseForm() {
+		return this.enrollCourseForm;
+	}
+
+	public WebElement getCoursesDropdownButton() {
+		return this.courseDropdown;
+	}
+
 	public WebElement getRemoveStudentButton() {
 		return this.removeStudentButton;
+	}
+	
+	public WebElement getToggleCoursesButton() {
+		return this.toggleCoursesButton;
 	}
 
 	public String getFormNameFieldValue() {

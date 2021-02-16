@@ -56,6 +56,9 @@ public class StudentPage extends PageObject {
 	@FindBy(css = "button[data-test-id='courses']")
 	private WebElement toggleCoursesButton;
 
+	@FindBy(css = "button[data-test-id='delete']")
+	private WebElement removeStudentButton;
+
 	// FORM Submit button
 	@FindBy(css = "button[data-test-id='save']")
 	private WebElement formSubmitButton;

@@ -26,6 +26,7 @@ public class StudentPageTest extends FunctionalTest {
 
 	@Test
 	public void addNewStudent() {
+		
 		// Save number of rows before submit
 		int numberOfEntriesBeforeInsert = students.getNumberOfEntries();
 

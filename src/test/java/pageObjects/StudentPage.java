@@ -79,11 +79,12 @@ public class StudentPage extends PageObject {
 	   this.tableItem.click();
 
 	   // Populate update form fields
-	   this.name.sendKeys("TEST_QA_Name_UPDATE");
+	   this.name.sendKeys("_UPDATE");
 
-	   this.surname.sendKeys("TEST_QA_Surname_UPDATE");
+	   this.surname.sendKeys("_UPDATE");
 
-	   this.email.sendKeys("TEST_QA_UPDATE@mail.com");
+	   this.email.clear();
+	   this.email.sendKeys("UPDATE@mail.com");
 
 	   // Submit form
 	   this.formSubmitButton.click();

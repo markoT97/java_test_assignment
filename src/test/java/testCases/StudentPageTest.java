@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import environment.*;
@@ -42,7 +43,7 @@ public class StudentPageTest extends FunctionalTest {
 		// Populate form fields and submit form
 		students.addStudent();
 
-		// Wait update form to be opened, this means that delete button is shown
+		// Wait update form to be opened, it is proved by that the delete button is visible
 		wait.until(ExpectedConditions.visibilityOf(students.getRemoveStudentButton()));
 		
 		// Save number of rows after submit
@@ -57,14 +58,21 @@ public class StudentPageTest extends FunctionalTest {
 		// Wait table to show
 		wait.until(ExpectedConditions.visibilityOf(students.getTableItem()));
 
+		students.getTableItem().click();
+
 		// Save name field value before update
 		String nameValueBeforeUpdate = students.getFormNameFieldValue();
 
+		wait.until(ExpectedConditions.visibilityOf(students.getForm()));
+
 		// Update form fields and submit form
-		//students.updateStudent();
-		
+		students.updateStudent();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='MuiDataGrid-colCellWrapper '][style*='570px']")));
+
+		// This is bad aproach (not Page Object pattern), but I didn't find solution to refresh elements foundedWith @FindBy annotation
 		// Save name field value after update
-		String nameValueAfterUpdate = driver.findElement(By.cssSelector("div[data-field='name']")).getAttribute("innerText");
+		String nameValueAfterUpdate = driver.findElement(By.cssSelector("div[data-field='name'")).getAttribute("innerText");
 
 		assertNotEquals(nameValueBeforeUpdate, nameValueAfterUpdate);
 	}

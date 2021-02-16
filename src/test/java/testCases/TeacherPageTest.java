@@ -12,83 +12,82 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import environment.*;
-import pageObjects.StudentPage;
+import pageObjects.TeacherPage;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class StudentPageTest extends FunctionalTest {
+public class TeacherPageTest extends FunctionalTest {
 
-	private StudentPage students;
+	private TeacherPage teachers;
 
-	public StudentPageTest() {
+	public TeacherPageTest() {
 		super();
-		students = new StudentPage(driver);
+		teachers = new TeacherPage(driver);
 	}
 
 	@BeforeAll
-	public static void getStudentPage() {
-		driver.get(APP_URL + "/student");
+	public static void getTeacherPage() {
+		driver.get(APP_URL + "/teacher");
 	}
 
 	//	@Test
 	//	public void testPageHeaderTitle() {
-	//		assertEquals("Student", students.getHeaderTitle());
+	//		assertEquals("Teacher", teachers.getHeaderTitle());
 	//	}
 
 	@Test
 	@Order(1)
-	public void addNewStudent() {
-		
+	public void addNewTeacher() {
 		// Save number of rows before submit
-		int numberOfEntriesBeforeInsert = students.getNumberOfEntries();
+		int numberOfEntriesBeforeInsert = teachers.getNumberOfEntries();
 
 		// Populate form fields and submit form
-		students.addStudent();
+		teachers.addTeacher();
 
 		// Wait update form to be opened, it is proved by that the delete button is visible
-		wait.until(ExpectedConditions.visibilityOf(students.getRemoveStudentButton()));
+		wait.until(ExpectedConditions.visibilityOf(teachers.getRemoveTeacherButton()));
 		
 		// Save number of rows after submit
-		int numberOfEntriesAfterInsert = students.getNumberOfEntries();
+		int numberOfEntriesAfterInsert = teachers.getNumberOfEntries();
 
 		assertEquals(++numberOfEntriesBeforeInsert, numberOfEntriesAfterInsert);
 	}
 
 	@Test
 	@Order(2)
-	public void updateStudent() {
+	public void updateTeacher() {
 		// Wait table to show
-		wait.until(ExpectedConditions.visibilityOf(students.getTableItem()));
+		wait.until(ExpectedConditions.visibilityOf(teachers.getTableItem()));
 
-		students.getTableItem().click();
+		teachers.getTableItem().click();
 
 		// Save name field value before update
-		String nameValueBeforeUpdate = students.getFormNameFieldValue();
+		String nameValueBeforeUpdate = teachers.getFormNameFieldValue();
 
-		wait.until(ExpectedConditions.visibilityOf(students.getForm()));
+		wait.until(ExpectedConditions.visibilityOf(teachers.getForm()));
 
 		// Update form fields and submit form
-		students.updateStudent();
+		teachers.updateTeacher();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='MuiDataGrid-colCellWrapper '][style*='570px']")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='MuiDataGrid-colCellWrapper '][style*='270px']")));
 
 		// This is bad aproach (not Page Object pattern), but I didn't find solution to refresh elements foundedWith @FindBy annotation
 		// Save name field value after update
-		String nameValueAfterUpdate = driver.findElement(By.cssSelector("div[data-field='name'")).getAttribute("innerText");
+		String nameValueAfterUpdate = driver.findElement(By.cssSelector("div[data-field='teacherName'")).getAttribute("innerText");
 
 		assertNotEquals(nameValueBeforeUpdate, nameValueAfterUpdate);
 	}
 
 	@Test
 	@Order(3)
-	public void removeStudent() {
+	public void removeTeacher() {
 		// Save number of rows before delete
-		int numberOfEntriesBeforeInsert = students.getNumberOfEntries();
+		int numberOfEntriesBeforeInsert = teachers.getNumberOfEntries();
 		
 		// Click on delete button
-		students.getRemoveStudentButton().click();
+		teachers.getRemoveTeacherButton().click();
 
 		// Save number of rows after delete
-		int numberOfEntriesAfterInsert = students.getNumberOfEntries();
+		int numberOfEntriesAfterInsert = teachers.getNumberOfEntries();
 
 		assertEquals(--numberOfEntriesBeforeInsert, numberOfEntriesAfterInsert);
 	}
